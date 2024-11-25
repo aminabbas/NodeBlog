@@ -1,26 +1,8 @@
 const express = require('express');
-const Blog = require("../models/blogs");
 const router = express.Router();
+const blogController = require("../controllers/blogController");
 
-router.get('/blog', (req, res) => {
-    Blog.find().sort({createdAt: -1})
-        .then(result => {
-            res.render('index', {title: "Homepage", blogs: result});
-        })
-        .catch(err => {
-            console.log(err)
-        })
-})
-
-router.get('/blog/:id', (req, res) => {
-    const id = req.params.id;
-    Blog.findById(id)
-        .then(result => {
-            res.render('blog', {title: "Blog", blog: result});
-        })
-        .catch(err => {
-            res.status(404).render('404', {title: "Not Found"});
-        })
-})
+router.get('/',blogController.blog_index )
+router.get('/:id', blogController.blog_find)
 
 module.exports = router;
