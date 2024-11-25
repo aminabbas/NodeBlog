@@ -58,6 +58,19 @@ app.delete('/admin/delete/:id', (req, res) => {
         })
 })
 
+app.delete('/admin/delete/:id', (req, res) => {
+    const id = req.params.id;
+
+    Blog.findByIdAndDelete(id)
+        .then((result) => {
+            res.json({link: '/admin'})
+        })
+        .catch(err => {
+            console.log(err);
+        })
+})
+
+
 app.get('/', (req, res) => {
     Blog.find().sort({createdAt: -1})
         .then(result => {
