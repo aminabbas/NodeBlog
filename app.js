@@ -2,7 +2,6 @@ const express = require('express');
 const morgan = require('morgan');
 const mongos = require('mongoose')
 const Blog = require('./models/blogs');
-const blog = require("./models/blogs");
 
 const app = express();
 const dbURL = 'mongodb+srv://aminabbasli021:OwIG2Ss76qqL0UaJ@nodeblog.txjuq.mongodb.net/?retryWrites=true&w=majority&appName=NodeBlog'
@@ -57,19 +56,6 @@ app.delete('/admin/delete/:id', (req, res) => {
             console.log(err);
         })
 })
-
-app.delete('/admin/delete/:id', (req, res) => {
-    const id = req.params.id;
-
-    Blog.findByIdAndDelete(id)
-        .then((result) => {
-            res.json({link: '/admin'})
-        })
-        .catch(err => {
-            console.log(err);
-        })
-})
-
 
 app.get('/', (req, res) => {
     Blog.find().sort({createdAt: -1})
