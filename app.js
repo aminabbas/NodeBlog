@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const mongos = require('mongoose')
 const adminRoutes = require('./routes/adminRoutes');
 const blogRoutes = require('./routes/blogRoutes');
+const authRoutes = require('./routes/authRoutes');
 const app = express();
 const dbURL = 'mongodb+srv://aminabbasli021:OwIG2Ss76qqL0UaJ@nodeblog.txjuq.mongodb.net/?retryWrites=true&w=majority&appName=NodeBlog'
 
@@ -20,6 +21,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: true}));
+app.use('/', authRoutes);
 app.use('/blog',blogRoutes);
 app.use('/admin', adminRoutes);
 
@@ -32,10 +34,6 @@ app.get('/about', (req, res) => {
 
 app.get('/about-us', (req, res) => {
     res.redirect('/about');
-})
-
-app.get('/login', (req, res) => {
-    res.render('login', {title: 'Login'});
 })
 
 app.use((req, res) => {
